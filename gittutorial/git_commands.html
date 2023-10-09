@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Git Commands</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            color: #111;
+            text-decoration: none;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: rgb(245, 245, 245);
+            display: grid;
+            grid-gap: 3rem;
+            padding: 0 2rem;
+        }
+
+        .white-space {
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .white-space a {
+            color: rgb(180, 180, 180)
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            content: '';
+        }
+
+        h2::before {
+            content: '>> '
+        }
+
+        ul {
+            list-style-type: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        ul ul {
+            padding: 0 1rem;
+        }
+
+        main section {
+            margin-bottom: 1.7rem;
+        }
+
+        main ul ul {
+            padding: 0 2rem;
+        }
+
+        main li {
+            margin-bottom: 12px
+        }
+
+        main .main-heading {
+            display: none;
+        }
+
+        nav>ul>li {
+            font-weight: bolder;
+            margin: 4px 0;
+        }
+
+        b {
+            background-color: rgb(230, 230, 230);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-right: 6px;
+        }
+
+        aside {
+            padding-top: 1rem;
+        }
+
+
+        @media only screen and (min-width: 1100px) {
+            body {
+                font-family: 'Montserrat', sans-serif;
+                font-family: 'Space Grotesk', sans-serif;
+                background-color: rgb(245, 245, 245);
+                width: calc(100% - 100px);
+                margin: 0 auto;
+                display: block;
+                padding: 2rem 0;
+                position: relative;
+            }
+
+            aside .aside-heading {
+                display: none;
+            }
+
+            main .main-heading {
+                display: block;
+            }
+
+            aside {
+                height: 90vh;
+                position: fixed;
+                padding-top: 1rem;
+                margin-right: 1rem;
+                /* background-color: #fff;s */
+            }
+
+            main {
+                width: 80%;
+                padding-left: 4rem;
+                float: right;
+            }
+
+        }
+
+        @media only screen and (min-width: 1300px) {
+            main {
+                width: 80%;
+                padding-left: 1rem;
+                float: right;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- sidebar -->
+    <aside class="sidebar">
+        <h1 class="aside-heading">Git Commands</h1>
+        <nav class="navbar">
+            <ul>
+                <li><a href="#general">General Commands</a></li>
+                <ul>
+                    <li><a href="#config">git config</a></li>
+                    <li><a href="#init">git init</a></li>
+                    <li><a href="#status">git status</a></li>
+                    <li><a href="#add">git add</a></li>
+                    <li><a href="#commit">git commit</a></li>
+                    <li><a href="#log">git log</a></li>
+                    <li><a href="#diff">git diff &lt;...&gt;</a></li>
+                    <li><a href="#reset-filename">git reset filename</a></li>
+                    <li><a href="#reset-commitHash">git reset commitHash</a></li>
+                    <li><a href="#reset-commitHash-hard">git reset commitHash --hard</a></li>
+                    <li><a href="#checkout--filename">git checkout -- filename</a></li>
+                    <li><a href="#rm-filename">git rm filename</a></li>
+                </ul>
+                <li><a href="#Branches">Branches</a></li>
+                <ul>
+                    <li><a href="#branch">git branch</a></li>
+                    <li><a href="#branch-d">git branch -d branchName</a></li>
+                    <li><a href="#checkout-branchName">git checkout branchName</a></li>
+                    <li><a href="#merge-branchName">git merge branchName</a></li>
+                </ul>
+                <li><a href="#remoteAndClone">Remote & Clone</a></li>
+                <ul>
+                    <li><a href="#clone">git clone gitAddress</a></li>
+                    <li><a href="#remote-add">git remote add gitAddress</a></li>
+                    <li><a href="#remote-v">git remote -v</a></li>
+                    <li><a href="#push-origin-master">git push origin master</a></li>
+                    <li><a href="#pull-origin-master">git pull origin master</a></li>
+                </ul>
+                <li><a href="#-tag">Tag</a></li>
+                <ul>
+                    <li><a href="#tag">git tag</a></li>
+                    <li><a href="#tag-a">git tag -a &lt;...&gt; -m ''</a></li>
+                    <li><a href="#tag-a-commitHash">git tag -a &lt;...&gt; commitHash -m ''</a></li>
+                    <li><a href="#tag-v">git tag -v &lt;...&gt; verifytag -v</a></li>
+                    <li><a href="#show-tagName">git show tagName</a></li>
+                    <li><a href="#push-origin-tagName">git push origin tagName</a></li>
+                    <li><a href="#origin--tags">git push origin --tags</a></li>
+                    <li><a href="#blame">git blame</a></li>
+                    <li><a href="#pgp">pgp (gpg in openSource World)</a></li>
+                </ul>
+                <li><a href="#Bisect">Bisect</a></li>
+                <ul>
+                    <li><a href="#bisect">git bisect</a></li>
+                </ul>
+            </ul>
+        </nav>
+    </aside>
+
+
+
+    <main class="main">
+        <h1 class="main-heading">Git Commands</h1>
+        <!-- content -->
+        <section class="content">
+            <!-- start General Commands -->
+            <section>
+                <h2 id="general">General Commands</h2>
+                <ul>
+                    <li id="config"><b>git config --global user.name "USERNAME" :</b> config username
+                        globally </li>
+                    <li id="config"><b>git config --global user.email "USEREmail" :</b> config user email
+                        globally </li>
+                    <li id="config"><b>git config --global color.ui true :</b> show outputs colorful</li>
+                    <li id="init"><b>git init:</b> Git initializing on Current Directory</li>
+                    <li id="status"><b>git status:</b> show modified, untracked and Staged Files </li>
+                    <li id="add"><b>git add:</b> Add untracked Or Modified File to <b>Stage</b></li>
+                    <li id="add"><b>git add . & git add -A:</b> These two commands add all untracked or
+                        modified files to that
+                        <b>Stage</b>
+                    </li>
+                    <li id="commit"> <b>git commit:</b> Commit Staged File and remove them from stage.
+                        after
+                        commit all stages new
+                    </li>
+                    <li id="commit"> <b>git commit -m "Title" -m "message" :</b> Commit with Title and
+                        Message
+                    </li>
+                    <li id="log"><b>git log:</b> show a log of Commits with date, Descrtions and Author
+                        Name</li>
+                    <li id="log"><b>git log --one-line --graph --all --decorate:</b> show logs like tree
+                        with all Branches , ...</li>
+                    <li id="diff"><b>git diff &lt;...&gt;:</b> Comparison two Version of one file</li>
+                    <ul> for Example:
+                        <li>
+                            <span>git diff <b>HEAD</b>:</span> Comparison last committed state vs current
+                            State for
+                            All Modified
+                            Files
+                        </li>
+                        <li>
+                            <span>git diff --staged:</span> Comparison last committed state of Staged files
+                            vs current
+                            state
+                        </li>
+                    </ul>
+                    <li id="reset-filename"><b>git reset filename:</b> unStage file</li>
+                    <li id="reset-commitHash"><b>git reset commitHash:</b> Back to specified commit ->
+                        modifications will be Unstaged (NOT Removed)</li>
+                    <li id="reset-commitHash-hard"><b>git reset commitHash --hard:</b> project FULLY
+                        Returned to specified commit and modifications will be Removed</li>
+                    <li id="checkout--filename"><b>git checkout -- filename:</b> remove last modifications
+                        in file and return file to last
+                        committed
+                        version</li>
+                    <li id="rm-filename"><b>git rm filename:</b> remove file from both git and system</li>
+                </ul>
+            </section>
+
+            <!-- start branches -->
+            <section>
+                <h2 id="Branches">-Branches-</h2>
+                <ul>
+                    <li id="branch"><b>git branch:</b> show list of All Branches</li>
+                    <li id="branch-d"><b>git branch -d branchName:</b> Delete Branch</li>
+                    <li id="checkout-branchName"><b>git checkout branchName:</b> switch to branch with
+                        name: branchName</li>
+                    <li id="checkout-branchName"><b>git checkout -b branchName:</b> create and switch to
+                        branch with name: branchName</li>
+                    <li id="merge-branchName"><b>git merge branchName:</b> merge 'branchName' branch into
+                        current branch</li>
+                </ul>
+            </section>
+
+            <!-- start Remote & Clone -->
+            <section>
+                <h2 id="remoteAndClone">-Remote & Clone-</h2>
+                <ul>
+                    <li id="clone"><b>git clone gitAddress:</b> Clone whole a repo to local with initialized
+                        git</li>
+                    <li id="remote-add"><b>git remote add alias gitAddress:</b> add a Remote (alias like
+                        origin) </li>
+                    <li id="remote-v"><b>git remote -v:</b> verbose Remotes (show full Info from remotes)
+                    </li>
+                    <li><b>Note:</b> we can have extra than ONE remote so for example we can add 3 remotes for Github,
+                        Gitlab and
+                        Company git Server</li>
+                    <li><b>Note: origin:</b> original Branch we copied from that</li>
+                    <li id="push-origin-master"><b>git push origin master:</b> push changes from MASTER to
+                        ORIGIN</li>
+                    <li><b>Note:</b> since <b>October 1, 2020</b> any new repository will use <b>main</b>
+                        as the default branch, instead of master.<br>
+                        so if you fork a <b>new</b> repo and make some changes, commits and you want to push it, use :
+                        <b>git push origin main</b>
+                    </li>
+                    <li><b>Note:</b> git push <b>-u</b> origin master: -u causes git to save 'origin master' so in next
+                        steps it's
+                        no need to write 'origin master':</li>
+                    <li id="pull-origin-master"><b>git pull origin master:</b> pull changes from ORIGIN to
+                        MASTER</li>
+                    <li><b>Note: git remote add</b> just creates an entry in your git config that specifies a name for a
+                        particular
+                        URL.
+                        You must have an existing git repo to use this. <br>
+                        <b>git clone</b> creates a new git repository by copying an existing one located at
+                        the URI
+                        you specify.
+                    </li>
+                </ul>
+            </section>
+
+
+            <!-- start Tag -->
+            <section>
+                <h2 id="-tag">-Tag-</h2>
+                <ul>
+                    <li id="tag"><b>git tag:</b> show list of tags</li>
+                    <li id="tag-a"><b>git tag -a &lt;...&gt; -m '' :</b> set annotation (tag) with message
+                        like:
+                        <span>git tag -a v2.0 -m 'release Version 2.0'</span>
+                    </li>
+                    <li id="tag-a-commitHash"><b>git tag -a &lt;...&gt; commitHash -m '' :</b> set
+                        annotation
+                        (tag) with message for a COMMIT
+                    </li>
+                    <li id="tag-v"><b>git tag -v &lt;...&gt; verifytag -v :</b> show tag verify
+                    </li>
+                    <li id="show-tagName"><b>git show tagName:</b> show full info about tag
+                    </li>
+                    <li id="push-origin-tagName"><b>git push origin tagName:</b> Regullary tags dont push to origin with other
+                        changes and we
+                        should push them manually
+                    </li>
+                    <li id="origin--tags"><b>git push origin --tags:</b> like above for push all tags
+                    </li>
+                    <li id="blame"><b>git blame </b> بررسی اینکه کل کد یا بخشی ازش یا حتی خطی ازش توسط کیا نوشته و
+                        ویرایش شده
+                    </li>
+                    <li  id="pgp"><b>pgp (gpg in openSource World) </b> ساین کردن تگ ها یا کامیت ها
+                    </li>
+                    <h4>--Bisect--</h4>
+                    <li><b>git bisect </b> debuging code by moving through commits
+                    </li>
+                    <ul>
+                        <li><b>git bisect start</b> start using git bisect
+                        </li>
+                        <li><b>git bisect bad &lt;commit code&gt;</b>select a bad commit (or just leave it
+                            to
+                            select this commit)
+                        </li>
+                        <li><b>git bisect good &lt;commit code&gt;</b>select a good commit (or just leave
+                            it to
+                            select this commit)
+                        </li>
+                    </ul>
+                    <li><b>Note:</b> You must test your code every time you use bisect then use good or bad after git
+                        bisect !</li>
+
+                    <!-- start Bisect  -->
+                    <section>
+                        <h2 id="Bisect">-Bisect--</h2>
+                        <ul>
+                            <li id="bisect"><b>git bisect:</b> debugging code by moving through commits
+                            </li>
+                            <ul>
+                                <li><b>git bisect start:</b> start using git bisect
+                                </li>
+                                <li><b>git bisect bad: &lt;commit code&gt;</b> select a bad commit (or
+                                    just leave
+                                    it to select this commit)
+                                </li>
+                                <li><b>git bisect good: &lt;commit code&gt;</b> select a good commit (or
+                                    just
+                                    leave it to select this commit)
+                                </li>
+                            </ul>
+                            <li><b>Note:</b> You must test your code every time you use bisect then use good or bad
+                                after git bisect !</li>
+                        </ul>
+                    </section>
+
+                    <!-- <section class="white-space">
+                        <a href="#">&uarr; back to top &uarr; </a>
+                    </section> -->
+                </ul>
+            </section>
+        </section>
+    </main>
+
+</body>
+
+</html>
